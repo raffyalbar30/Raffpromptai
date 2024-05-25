@@ -1,9 +1,12 @@
 import { FaTelegramPlane } from "react-icons/fa";
 import './App.css'
-import { useState } from "react";
+import Typed from 'typed.js';
+import { useRef, useState } from "react";
 import { requestprompt } from "./libs/Groq";
 import { Light as SyntaxHighlight } from "react-syntax-highlighter";
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { useEffect } from "react";
+
 
 
 
@@ -12,6 +15,7 @@ function App() {
     const [Data,setData] = useState([]);
     const [Message, setMessage] = useState([]);
     const [click, setclick] = useState();
+    const typedjs = useRef();
     
 
 
@@ -29,15 +33,37 @@ function App() {
     }
 
  
-    
+    useEffect(() => {
 
+      const typed = new Typed(typedjs.current, {
+        strings: [
+          'Hello you need help ?',
+          'Raff Prompt Engineer Ai 🚀🤔',
+          'hare, for help you ask my noww 👇'
+        ],
+        typeSpeed: 100,
+        loop: true,
+        showCursor: true,
+        cursorChar: '|',
+        startDelay: 2000,
+        fadeOut: true,
+      
+      });
+  
+      return () => {
+        // Destroy Typed instance during cleanup to stop animation
+        typed.destroy();
+      };
+  
+    }, []);
+  
   return (
     <> 
         <section className="w-full h-full object-cover">
           <main>
          <div className="md:w-1/2 w-full border mx-auto h-auto rounded-lg -z-10">
          <div className='mt-12 p-4'>
-             <p className='text-4xl font-semibold text-blue-500'>Raff Prompt Engineer Ai 🚀🤔</p>
+             <p className='text-4xl font-semibold text-blue-500'><span ref={typedjs}></span></p>
               <div className='mt-8'>
                     <div className="max-w-md mx-auto">   
                  <label  className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -48,7 +74,7 @@ function App() {
                 </div>
                 <input type="text" 
                  name='serch' 
-                 className="block w-full px-48  p-4 ps-10 text-sm text-gray-900 border
+                 className="block w-full px-16 p-4 ps-2 text-sm text-gray-900 border
                  rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500
                   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -64,8 +90,8 @@ function App() {
               </div>
                {
                  click ?
-              <div className="max-w-xl text-left mx-auto mt-2 rounded-md overflow-y-auto overflow-auto ">
-              <SyntaxHighlight language="swift" style={atomOneDark} wrapLongLines={true} className="pl-2 text-sm rounded-lg p-2">
+              <div className="max-w-xl text-left mx-auto p-4 mt-2 rounded-md overflow-y-auto overflow-auto ">
+              <SyntaxHighlight language="swift" style={atomOneDark} wrapLongLines={true} className="pl-4 pr-4 text-sm rounded-lg">
                     {Message}
               </SyntaxHighlight>
               </div> 
